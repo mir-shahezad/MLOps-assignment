@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iris Flower Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4a90e2;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4a90e2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #357abd;
+        }
+
+        .prediction {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #e8f4ec;
+            color: #2e7d32;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #b2dfdb;
+        }
+
+        .probabilities {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 8px;
+        }
+
+        @media screen and (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Iris Flower Prediction</h2>
+        <form method="post">
+            <label for="feature1">Sepal Length (cm)</label>
+            <input type="number" step="any" name="feature1" required>
+
+            <label for="feature2">Sepal Width (cm)</label>
+            <input type="number" step="any" name="feature2" required>
+
+            <label for="feature3">Petal Length (cm)</label>
+            <input type="number" step="any" name="feature3" required>
+
+            <label for="feature4">Petal Width (cm)</label>
+            <input type="number" step="any" name="feature4" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction is not none %}
+            <div class="prediction">
+                Prediction: {{ prediction }}
+            </div>
+        {% endif %}
+
+        {% if probabilities %}
+            <div class="probabilities">
+                <strong>Confidence:</strong><br/>
+                <ul>
+                {% for species, prob in probabilities.items() %}
+                    <li>{{ species }}: {{ prob }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

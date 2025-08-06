@@ -78,13 +78,22 @@ app = Flask(__name__, template_folder='templates')
 if not os.path.exists('logs'):
     os.makedirs('logs')
 
-log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s')
-file_handler = RotatingFileHandler('logs/app.log', maxBytes=1000000, backupCount=3)
-file_handler.setFormatter(log_formatter)
-file_handler.setLevel(logging.INFO)
+# log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s')
+# file_handler = RotatingFileHandler('logs/app.log', maxBytes=1000000, backupCount=3)
+# file_handler.setFormatter(log_formatter)
+# file_handler.setLevel(logging.INFO)
+#
+# app.logger.setLevel(logging.INFO)
+# app.logger.addHandler(file_handler)
+# Remove file handlers for Docker; use StreamHandler (stdout)
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s')
+handler.setFormatter(formatter)
 
 app.logger.setLevel(logging.INFO)
-app.logger.addHandler(file_handler)
+app.logger.addHandler(handler)
+
 # ----------------------------------------------------------
 
 # Define the path to your model inside the Docker container

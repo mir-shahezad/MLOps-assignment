@@ -91,8 +91,8 @@ app.logger.addHandler(file_handler)
 # formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s')
 # handler.setFormatter(formatter)
 
-app.logger.setLevel(logging.INFO)
-app.logger.addHandler(handler)
+# app.logger.setLevel(logging.INFO)
+# app.logger.addHandler(handler)
 
 # ----------------------------------------------------------
 

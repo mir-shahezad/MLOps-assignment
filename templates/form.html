@@ -91,22 +91,37 @@
             }
         }
     </style>
+    <script>
+function validatePositive(input) {
+  const value = parseFloat(input.value);
+
+  if (input.value === "") {
+    input.setCustomValidity("This field is required.");
+  } else if (isNaN(value) || value <= 0) {
+    input.setCustomValidity("Please enter a positive number.");
+  } else {
+    input.setCustomValidity(""); // clear the message when valid
+  }
+
+  input.reportValidity(); // show the message immediately
+}
+</script>
 </head>
 <body>
     <div class="container">
         <h2>Iris Flower Prediction</h2>
         <form method="post">
             <label for="feature1">Sepal Length (cm)</label>
-            <input type="number" step="any" name="feature1" required>
+            <input type="number" step="any" name="feature1" required oninput="validatePositive(this)">
 
             <label for="feature2">Sepal Width (cm)</label>
-            <input type="number" step="any" name="feature2" required>
+            <input type="number" step="any" name="feature2" required oninput="validatePositive(this)">
 
             <label for="feature3">Petal Length (cm)</label>
-            <input type="number" step="any" name="feature3" required>
+            <input type="number" step="any" name="feature3" required oninput="validatePositive(this)">
 
             <label for="feature4">Petal Width (cm)</label>
-            <input type="number" step="any" name="feature4" required>
+            <input type="number" step="any" name="feature4" required oninput="validatePositive(this)">
 
             <input type="submit" value="Predict">
         </form>

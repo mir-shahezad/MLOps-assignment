@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 import mlflow.sklearn
 import numpy as np
 import joblib
@@ -6,6 +6,7 @@ import mlflow.pyfunc
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__, template_folder='templates')
 # ---------------------- Logging Setup ----------------------
@@ -33,6 +34,10 @@ except Exception as e:
     raise
 
 label_map = {0: "Iris-setosa", 1: "Iris-versicolor", 2: "Iris-virginica"}
+
+# --- Prometheus Metrics ---
+REQUEST_COUNT = Counter("predict_requests_total", "Total prediction requests")
+REQUEST_LATENCY = Histogram("predict_request_latency_seconds", "Prediction latency in seconds")
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
@@ -62,6 +67,10 @@ def predict():
             app.logger.exception("Error during prediction.")
 
     return render_template("form.html", prediction=prediction, probabilities=probabilities)
+
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000, host='0.0.0.0')

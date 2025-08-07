@@ -38,7 +38,7 @@ jobs:
       run: |
         dvc pull
         ls data
-        
+
     - name: Check data changes in dvc
       id: folder-check
       uses: dorny/paths-filter@v3

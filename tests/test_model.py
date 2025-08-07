@@ -8,7 +8,7 @@ from src.train import load_and_preprocess,train_model
 
 @pytest.fixture(scope="module")
 def data():
-    return load_and_preprocess(data_path="../data/iris_processed.csv")
+    return load_and_preprocess(data_path="data/iris_processed.csv")
 
 def test_data_split(data):
     X_train, X_test, y_train, y_test = data

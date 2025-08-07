@@ -6,3 +6,4 @@ mlflow
 joblib
 numpy
 flake8
+dvc

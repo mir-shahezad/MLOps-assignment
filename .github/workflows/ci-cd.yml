@@ -38,6 +38,8 @@ jobs:
       run: |
         pwd
         ls
+        dvc pull
+        ls data
         #cd ./tests
         pytest ./tests/test_model.py
 

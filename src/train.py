@@ -24,9 +24,9 @@ from sklearn.metrics import accuracy_score
 import pandas as pd
 
 
-def load_and_preprocess():
+def load_and_preprocess(data_path="data/iris_processed.csv"):
     # Load from local CSV file
-    df = pd.read_csv("data/iris_processed.csv")
+    df = pd.read_csv(data_path)
     X = df.drop(columns=["target"])
     y = df["target"]
     # Scale the features

@@ -2,11 +2,13 @@ import pytest
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+
 from src.train import load_and_preprocess,train_model
+
 
 @pytest.fixture(scope="module")
 def data():
-    return load_and_preprocess()
+    return load_and_preprocess(data_path="../data/iris_processed.csv")
 
 def test_data_split(data):
     X_train, X_test, y_train, y_test = data

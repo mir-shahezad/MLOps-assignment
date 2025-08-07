@@ -9,7 +9,6 @@ import os
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 import time
 
-
 app = Flask(__name__, template_folder='templates')
 # ---------------------- Logging Setup ----------------------
 if not os.path.exists('logs'):

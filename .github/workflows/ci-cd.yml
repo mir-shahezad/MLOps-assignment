@@ -43,6 +43,8 @@ jobs:
     - name: Train Model (if data changes)
       if: steps.folder-check.outputs.dvc == 'true'
       run: |
+        pwd
+        ls
         python src/train.py
         
         

@@ -52,7 +52,7 @@ jobs:
       run: |
         pwd
         ls
-        python src/train.py  --data-path ../data/iris_processed.csv
+        python src/train.py  --data-path data/iris_processed.csv
 
     - name: Run Pytest
       run: |

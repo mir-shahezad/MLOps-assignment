@@ -8,19 +8,34 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
+# def load_and_preprocess():
+#     iris = load_iris(as_frame=True)
+#     df = iris.frame
+#     X = df.drop(columns=["target"])
+#     y = df["target"]
+#
+#     scaler = StandardScaler()
+#     X_scaled = scaler.fit_transform(X)
+#
+#     # Save scaler
+#     joblib.dump(scaler, "scaler.pkl")
+#
+#     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+import pandas as pd
+
+
 def load_and_preprocess():
-    iris = load_iris(as_frame=True)
-    df = iris.frame
+    # Load from local CSV file
+    df = pd.read_csv("data/iris_processed.csv")
     X = df.drop(columns=["target"])
     y = df["target"]
-
+    # Scale the features
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
-
-    # Save scaler
+    # Save scaler for use in the Flask app
     joblib.dump(scaler, "scaler.pkl")
-
     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
 
 def train_model(model, model_name, X_train, X_test, y_train, y_test):
     model.fit(X_train, y_train)

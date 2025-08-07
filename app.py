@@ -7,6 +7,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+import time
+
 
 app = Flask(__name__, template_folder='templates')
 # ---------------------- Logging Setup ----------------------
@@ -46,6 +48,8 @@ def predict():
 
     if request.method == "POST":
         try:
+            start_time = time.time()
+            REQUEST_COUNT.inc()
             features = [float(request.form[f"feature{i}"]) for i in range(1, 5)]
             app.logger.info(f"Received input features: {features}")
 
@@ -65,7 +69,8 @@ def predict():
         except Exception as e:
             prediction = f"Error: {e}"
             app.logger.exception("Error during prediction.")
-
+        # Observe latency
+        REQUEST_LATENCY.observe(time.time() - start_time)
     return render_template("form.html", prediction=prediction, probabilities=probabilities)
 
 @app.route("/metrics")

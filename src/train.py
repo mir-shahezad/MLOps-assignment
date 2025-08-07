@@ -88,8 +88,8 @@ def copy_latest_run_artifacts():
     import shutil
     import os
 
-    # source_mlruns_path = "mlruns/1/models/" + get_latest_modified_directory("mlruns/1/models") + "/artifacts"  # Or "mlruns/1/SOME_RUN_ID/artifacts/models"
-    source_mlruns_path = "mlruns/1/" + get_latest_modified_directory("mlruns/1") + "/artifacts/model"  # Or "mlruns/1/SOME_RUN_ID/artifacts/models"
+    source_mlruns_path = "mlruns/1/models/" + get_latest_modified_directory("mlruns/1/models") + "/artifacts"  # Or "mlruns/1/SOME_RUN_ID/artifacts/models"
+    # source_mlruns_path = "mlruns/1/" + get_latest_modified_directory("mlruns/1") + "/artifacts/model"  # Or "mlruns/1/SOME_RUN_ID/artifacts/models"
     destination_local_path = "mlflow_model"
 
     # Create the destination directory if it doesn't exist

@@ -23,8 +23,7 @@ from sklearn.metrics import accuracy_score
 #     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 import pandas as pd
 
-
-def load_and_preprocess(data_path="../data/iris_processed.csv"):
+def load_and_preprocess(data_path):
     # Load from local CSV file
     df = pd.read_csv(data_path)
     X = df.drop(columns=["target"])
@@ -107,11 +106,15 @@ def copy_latest_run_artifacts():
         print(f"An error occurred: {e}")
 
 def main():
+    parser = argparse.ArgumentParser(description="Load and preprocess data for model training.")
+    parser.add_argument("--data-path", type=str, default="../data/iris_processed.csv",
+                        help="Path to the input data file. Defaults to '../data/iris_processed.csv'.")
+    args = parser.parse_args()
     # mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("IrisModelExperiments")
 
-    X_train, X_test, y_train, y_test = load_and_preprocess()
+    X_train, X_test, y_train, y_test = load_and_preprocess(args.data_path)
 
     models = {
         "LogisticRegression": LogisticRegression(max_iter=1000),

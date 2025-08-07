@@ -50,6 +50,8 @@ jobs:
     - name: Train Model (if data changes)
       if: steps.folder-check.outputs.dvc == 'true'
       run: |
+        # Set the MLflow tracking URI to a local directory
+        export MLFLOW_TRACKING_URI=./mlruns
         pwd
         ls
         python src/train.py  --data-path data/iris_processed.csv

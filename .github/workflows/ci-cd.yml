@@ -31,15 +31,32 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+
+    - name: Check data changes in dvc
+        id: folder-check
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            dvc:
+              - '.dvc/**'
+
+    - name: Train Model (if data changes)
+      if: steps.folder-check.outputs.dvc == 'true'
+      run: |
+        python src/train.py
+        
+        
+
     # (Optional) Add a step here to run train.py if you want CI to retrain
     # - name: Run Training Script
     #   run: python scripts/train.py
+    - name: Get Data From DVC
+      run: |
+        dvc pull
+        ls data
     - name: Run Pytest
       run: |
         pwd
-        ls
-        dvc pull
-        ls data
         cd tests
         pytest test_model.py
 
@@ -60,15 +77,7 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to a server (Example)
-      #run: |
-        #echo "This is where you would SSH into a server and run 'docker run...'"
-        #echo "For this assignment, just printing the command is enough."
-        #echo "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/iris-classifier-app:latest"
-        #echo "docker run -d -p 80:8000 ${{ secrets.DOCKERHUB_USERNAME }}/iris-classifier-app:latest"
-        #docker version
-        #docker pull shahezme/iris-classifier-app:latest
-        #docker run --detach -p 8000:8000 shahezme/iris-classifier-app:latest
+    - name: Deploy to a server (EC2 instance)
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}

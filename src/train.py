@@ -9,19 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import argparse
 
-# def load_and_preprocess():
-#     iris = load_iris(as_frame=True)
-#     df = iris.frame
-#     X = df.drop(columns=["target"])
-#     y = df["target"]
-#
-#     scaler = StandardScaler()
-#     X_scaled = scaler.fit_transform(X)
-#
-#     # Save scaler
-#     joblib.dump(scaler, "scaler.pkl")
-#
-#     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 import pandas as pd
 
 def load_and_preprocess(data_path):

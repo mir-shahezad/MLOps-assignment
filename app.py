@@ -76,6 +76,6 @@ def predict():
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
-#This is the main Function, code change done here changes here
+#This is the main Function
 if __name__ == "__main__":
     app.run(debug=True, port=8000, host='0.0.0.0')

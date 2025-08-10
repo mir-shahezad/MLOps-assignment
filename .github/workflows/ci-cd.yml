@@ -31,9 +31,6 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    # (Optional) Add a step here to run train.py if you want CI to retrain
-    # - name: Run Training Script
-    #   run: python scripts/train.py
     - name: Get Data From DVC
       run: |
         dvc pull
@@ -95,10 +92,3 @@ jobs:
 
           # Run the new container
           sudo docker run -d --name iris-classifier-app -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/iris-classifier-app:latest
-
-
-
-
-
-
-

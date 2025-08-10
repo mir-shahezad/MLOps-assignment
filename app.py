@@ -75,6 +75,6 @@ def predict():
 @app.route("/metrics")
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
-#This is the main Function, updating code
+#This is the main Function, code change
 if __name__ == "__main__":
     app.run(debug=True, port=8000, host='0.0.0.0')
